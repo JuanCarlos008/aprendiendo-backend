@@ -36,3 +36,10 @@ const deleteCourseCategory = async (req, res) => {
 		res.status(500).send(error)
 	}
 }
+
+export {
+	getCourseCategories,
+	createCourseCategory,
+	updateCourseCategory,
+	deleteCourseCategory,
+}

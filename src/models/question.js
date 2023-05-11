@@ -16,3 +16,5 @@ const Question = sequelize.define('Question', {
 		},
 	},
 })
+
+export default Question

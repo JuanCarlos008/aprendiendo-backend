@@ -33,3 +33,5 @@ const Answer = sequelize.define('Answer', {
 		allowNull: false,
 	},
 })
+
+export default Answer

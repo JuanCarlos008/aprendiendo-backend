@@ -9,3 +9,5 @@ const Role = sequelize.define('Role', {
 		allowNull: false,
 	},
 })
+
+export default Role

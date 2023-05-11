@@ -20,3 +20,5 @@ const Option = sequelize.define('Option', {
 		},
 	},
 })
+
+export default Option

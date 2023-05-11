@@ -36,3 +36,5 @@ const deleteModule = async (req, res) => {
 		res.status(500).send(error)
 	}
 }
+
+export { getModules, createModule, updateModule, deleteModule }

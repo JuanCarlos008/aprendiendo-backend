@@ -27,3 +27,5 @@ const Enroll = sequelize.define('Enroll', {
 		defaultValue: 'pendiente',
 	},
 })
+
+export default Enroll

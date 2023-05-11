@@ -30,3 +30,5 @@ const Grade = sequelize.define('Grade', {
 		allowNull: false,
 	},
 })
+
+export default Grade

@@ -36,3 +36,5 @@ const deleteCourse = async (req, res) => {
 		res.status(500).send(error)
 	}
 }
+
+export { getCourses, createCourse, updateCourse, deleteCourse }

@@ -38,3 +38,5 @@ const Job = sequelize.define('Job', {
 		allowNull: false,
 	},
 })
+
+export default Job

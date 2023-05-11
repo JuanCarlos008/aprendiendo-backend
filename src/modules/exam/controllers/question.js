@@ -36,3 +36,5 @@ const deleteQuestion = async (req, res) => {
 		res.status(500).send(error)
 	}
 }
+
+export { getQuestions, createQuestion, updateQuestion, deleteQuestion }

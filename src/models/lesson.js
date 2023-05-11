@@ -30,3 +30,5 @@ const Lesson = sequelize.define('Lesson', {
 		},
 	},
 })
+
+export default Lesson

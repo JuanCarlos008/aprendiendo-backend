@@ -23,3 +23,5 @@ const Exam = sequelize.define('Exam', {
 		},
 	},
 })
+
+export default Exam

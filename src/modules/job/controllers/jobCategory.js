@@ -1,40 +1,45 @@
-const CategoriasDeEmpleo = require('./models/categorias_de_empleo')
-
-const getCategoriasDeEmpleo = async (req, res) => {
+const getJobCategories = async (req, res) => {
 	try {
-		const categorias_de_empleo = await CategoriasDeEmpleo.findAll()
-		res.json(categorias_de_empleo)
+		const jobCategories = await JobCategory.findAll()
+		res.json(jobCategories)
 	} catch (error) {
 		res.status(500).send(error)
 	}
 }
 
-const createCategoriaDeEmpleo = async (req, res) => {
-	const categoria_de_empleo = new CategoriaDeEmpleo(req.body)
+const createJobCategory = async (req, res) => {
+	const jobCategory = new JobCategory(req.body)
 	try {
-		await categoria_de_empleo.save()
-		res.json(categoria_de_empleo)
+		await jobCategory.save()
+		res.json(jobCategory)
 	} catch (error) {
 		res.status(500).send(error)
 	}
 }
 
-const updateCategoriaDeEmpleo = async (req, res) => {
-	const categoria_de_empleo = await CategoriasDeEmpleo.findById(req.params.id)
+const updateJobCategory = async (req, res) => {
+	const jobCategory = await JobCategory.findById(req.params.id)
 	try {
-		categoria_de_empleo.fill(req.body)
-		await categoria_de_empleo.save()
-		res.json(categoria_de_empleo)
+		jobCategory.fill(req.body)
+		await jobCategory.save()
+		res.json(jobCategory)
 	} catch (error) {
 		res.status(500).send(error)
 	}
 }
 
-const deleteCategoriaDeEmpleo = async (req, res) => {
+const deleteJobCategory = async (req, res) => {
 	try {
-		await CategoriasDeEmpleo.destroyById(req.params.id)
+		await JobCategory.destroyById(req.params.id)
 		res.json({ message: 'Categoria de empleo eliminada' })
 	} catch (error) {
 		res.status(500).send(error)
 	}
+}
+
+export {
+	getJobCategories,
+	createJobCategory,
+	updateJobCategory,
+	deleteJobCategory,
 }

@@ -27,3 +27,5 @@ const Comment = sequelize.define('Comment', {
 		},
 	},
 })
+
+export default Comment

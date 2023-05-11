@@ -24,3 +24,5 @@ const Module = sequelize.define('Modulo', {
 		},
 	},
 })
+
+export default Module

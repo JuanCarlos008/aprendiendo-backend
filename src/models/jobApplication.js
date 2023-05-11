@@ -28,3 +28,5 @@ const JobApplication = sequelize.define('JobApplication', {
 		defaultValue: 'pendiente',
 	},
 })
+
+export default JobApplication

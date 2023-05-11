@@ -1,3 +1,5 @@
+import express from 'express'
+
 // Create a router
 const router = express.Router()
 

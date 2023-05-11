@@ -36,3 +36,5 @@ const deleteJob = async (req, res) => {
 		res.status(500).send(error)
 	}
 }
+
+export { getJobs, createJob, updateJob, deleteJob }

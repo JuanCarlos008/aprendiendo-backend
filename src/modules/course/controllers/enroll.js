@@ -36,3 +36,5 @@ const deleteEnroll = async (req, res) => {
 		res.status(500).send(error)
 	}
 }
+
+export { getEnrolls, createEnroll, updateEnroll, deleteEnroll }

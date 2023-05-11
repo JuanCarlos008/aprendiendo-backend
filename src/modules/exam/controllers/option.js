@@ -38,3 +38,5 @@ const deleteOption = async (req, res) => {
 		res.status(500).send(error)
 	}
 }
+
+export { getOptions, createOption, updateOption, deleteOption }

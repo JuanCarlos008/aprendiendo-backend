@@ -36,3 +36,5 @@ const deleteExam = async (req, res) => {
 		res.status(500).send(error)
 	}
 }
+
+export { getExams, createExam, updateExam, deleteExam }

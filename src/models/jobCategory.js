@@ -9,3 +9,5 @@ const JobCategory = sequelize.define('JobCategory', {
 		allowNull: false,
 	},
 })
+
+export default JobCategory
