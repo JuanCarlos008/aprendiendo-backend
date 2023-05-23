@@ -1,4 +1,4 @@
-const getCourses = async (req, res) => {
+const get = async (req, res) => {
 	try {
 		const courses = await Course.findAll()
 		res.json(courses)
@@ -7,7 +7,18 @@ const getCourses = async (req, res) => {
 	}
 }
 
-const createCourse = async (req, res) => {
+const getByID = async (req, res) => {
+	try {
+		const course = await Course.findOne({
+			where: { id: req.params.id },
+		})
+		res.json(course)
+	} catch (error) {
+		res.status(500).send(error)
+	}
+}
+
+const create = async (req, res) => {
 	const course = new Course(req.body)
 	try {
 		await course.save()
@@ -17,8 +28,10 @@ const createCourse = async (req, res) => {
 	}
 }
 
-const updateCourse = async (req, res) => {
-	const course = await Course.findById(req.params.id)
+const update = async (req, res) => {
+	const course = await Course.findOne({
+		where: { id: req.params.id },
+	})
 	try {
 		course.fill(req.body)
 		await course.save()
@@ -28,7 +41,7 @@ const updateCourse = async (req, res) => {
 	}
 }
 
-const deleteCourse = async (req, res) => {
+const deleteC = async (req, res) => {
 	try {
 		await Course.destroyById(req.params.id)
 		res.json({ message: 'Curso eliminado' })
@@ -36,5 +49,3 @@ const deleteCourse = async (req, res) => {
 		res.status(500).send(error)
 	}
 }
-
-export { getCourses, createCourse, updateCourse, deleteCourse }

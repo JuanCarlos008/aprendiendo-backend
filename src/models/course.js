@@ -6,29 +6,26 @@ const Course = sequelize.define(
 			primaryKey: true,
 			autoIncrement: true,
 		},
-		nombre_curso: {
+		title: {
 			type: Sequelize.STRING,
 		},
-		descripcion: {
+		description: {
 			type: Sequelize.TEXT,
 		},
-		costo: {
+		cost: {
 			type: Sequelize.DECIMAL(10, 2),
 		},
-		nivel_dificultad: {
-			type: Sequelize.STRING,
-		},
-		duracion: {
+		duration: {
 			type: Sequelize.INTEGER,
 		},
-		fecha_inicio: {
+		start_date: {
 			type: Sequelize.DATETIME,
 		},
-		fecha_finalizacion: {
+		finish_date: {
 			type: Sequelize.DATETIME,
 		},
 
-		categoria_id: {
+		category_id: {
 			type: Sequelize.INTEGER,
 			references: {
 				model: 'CursoCategorias',

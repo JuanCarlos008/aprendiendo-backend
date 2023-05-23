@@ -4,10 +4,14 @@ import express from 'express'
 const router = express.Router()
 
 // Register the routes with the router
-router.get('/course', getCourses)
+router.get('/', getModules)
 
-router.post('/course', createCourse)
+router.get('/:id', getModules)
 
-router.put('/course/:id', updateCourse)
+router.post('/', createModule)
 
-router.delete('/courses/:id', deleteCourse)
+router.put('/:id', updateModule)
+
+router.delete('/:id', deleteModule)
+
+export default router

@@ -1,13 +1,22 @@
-const Role = sequelize.define('Role', {
-	id: {
-		type: Sequelize.INTEGER,
-		primaryKey: true,
-		autoIncrement: true,
+const Role = sequelize.define(
+	'Role',
+	{
+		id: {
+			type: Sequelize.INTEGER,
+			primaryKey: true,
+			autoIncrement: true,
+		},
+		title: {
+			type: Sequelize.STRING,
+			allowNull: false,
+		},
 	},
-	nombre_tipo: {
-		type: Sequelize.STRING,
-		allowNull: false,
-	},
-})
+	{
+		timestamps: true,
+		createdAt: 'created_at',
+		updatedAt: 'updated_at',
+		tableName: 'users',
+	}
+)
 
 export default Role

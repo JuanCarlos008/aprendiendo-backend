@@ -2,7 +2,7 @@
 import http from 'http'
 import app from './app.js'
 import config from './config/config.js'
-import sequelize from './config/database.js'
+import sequelize from './database/config.js'
 
 const server = http.createServer(app)
 

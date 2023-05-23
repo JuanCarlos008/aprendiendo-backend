@@ -1,4 +1,4 @@
-const getComments = async (req, res) => {
+const get = async (req, res) => {
 	try {
 		const comment = await Comment.findAll()
 		res.json(comment)
@@ -7,7 +7,18 @@ const getComments = async (req, res) => {
 	}
 }
 
-const createComment = async (req, res) => {
+const getByID = async (req, res) => {
+	try {
+		const comment = await Comment.findOne({
+			where: { id: req.params.id },
+		})
+		res.json(comment)
+	} catch (error) {
+		res.status(500).send(error)
+	}
+}
+
+const create = async (req, res) => {
 	const comment = new Comment(req.body)
 	try {
 		await comment.save()
@@ -17,8 +28,10 @@ const createComment = async (req, res) => {
 	}
 }
 
-const updateComment = async (req, res) => {
-	const comment = await Comment.findById(req.params.id)
+const update = async (req, res) => {
+	const comment = await Comment.findOne({
+		where: { id: req.params.id },
+	})
 	try {
 		comment.fill(req.body)
 		await comment.save()
@@ -28,7 +41,7 @@ const updateComment = async (req, res) => {
 	}
 }
 
-const deleteComment = async (req, res) => {
+const deleteC = async (req, res) => {
 	try {
 		await Comment.destroyById(req.params.id)
 		res.json({ message: 'Comentario eliminado' })
@@ -37,4 +50,4 @@ const deleteComment = async (req, res) => {
 	}
 }
 
-export { getComments, createComment, updateComment, deleteComment }
+export { get, getByID, create, update, deleteC }
