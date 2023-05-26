@@ -1,5 +1,5 @@
 const Exam = sequelize.define(
-	'Exam',
+	'TblExam',
 	{
 		id: {
 			type: Sequelize.INTEGER,
@@ -20,7 +20,7 @@ const Exam = sequelize.define(
 		course_id: {
 			type: Sequelize.INTEGER,
 			references: {
-				model: 'Course',
+				model: 'TblCourse',
 				field: 'id',
 			},
 		},
@@ -29,7 +29,6 @@ const Exam = sequelize.define(
 		timestamps: true,
 		createdAt: 'created_at',
 		updatedAt: 'updated_at',
-		tableName: 'users',
 	}
 )
 

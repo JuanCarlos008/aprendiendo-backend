@@ -1,5 +1,5 @@
 const Answer = sequelize.define(
-	'Answer',
+	'TblAnswer',
 	{
 		id: {
 			type: Sequelize.INTEGER,
@@ -7,10 +7,14 @@ const Answer = sequelize.define(
 			autoIncrement: true,
 			allowNull: false,
 		},
+		score: {
+			type: Sequelize.DECIMAL(10, 2),
+			allowNull: false,
+		},
 		user_id: {
 			type: Sequelize.INTEGER,
 			references: {
-				model: 'User',
+				model: 'TblUser',
 				field: 'id',
 			},
 			allowNull: false,
@@ -18,7 +22,7 @@ const Answer = sequelize.define(
 		question_id: {
 			type: Sequelize.INTEGER,
 			references: {
-				model: 'Question',
+				model: 'TblQuestion',
 				field: 'id',
 			},
 			allowNull: false,
@@ -26,13 +30,9 @@ const Answer = sequelize.define(
 		option_id: {
 			type: Sequelize.INTEGER,
 			references: {
-				model: 'Option',
+				model: 'TblOption',
 				field: 'id',
 			},
-			allowNull: false,
-		},
-		score: {
-			type: Sequelize.DECIMAL(10, 2),
 			allowNull: false,
 		},
 	},
@@ -40,7 +40,6 @@ const Answer = sequelize.define(
 		timestamps: true,
 		createdAt: 'created_at',
 		updatedAt: 'updated_at',
-		tableName: 'Answer',
 	}
 )
 

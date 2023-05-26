@@ -1,18 +1,10 @@
 const Comment = sequelize.define(
-	'Comment',
+	'TblComment',
 	{
 		id: {
 			type: Sequelize.INTEGER,
 			primaryKey: true,
 			autoIncrement: true,
-			allowNull: false,
-		},
-		user_id: {
-			type: Sequelize.INTEGER,
-			references: {
-				model: 'User',
-				field: 'id',
-			},
 			allowNull: false,
 		},
 		content: {
@@ -22,7 +14,15 @@ const Comment = sequelize.define(
 		lesson_id: {
 			type: Sequelize.INTEGER,
 			references: {
-				model: 'Lesson',
+				model: 'TblLesson',
+				field: 'id',
+			},
+			allowNull: false,
+		},
+		user_id: {
+			type: Sequelize.INTEGER,
+			references: {
+				model: 'TblUser',
 				field: 'id',
 			},
 			allowNull: false,
@@ -32,7 +32,6 @@ const Comment = sequelize.define(
 		timestamps: true,
 		createdAt: 'created_at',
 		updatedAt: 'updated_at',
-		tableName: 'users',
 	}
 )
 

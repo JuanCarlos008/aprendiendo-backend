@@ -1,10 +1,11 @@
-const Enroll = sequelize.define(
-	'Enroll',
+const Enrollment = sequelize.define(
+	'TblEnrollment',
 	{
 		id: {
 			type: Sequelize.INTEGER,
 			primaryKey: true,
 			autoIncrement: true,
+			allowNull: false,
 		},
 		user_id: {
 			type: Sequelize.INTEGER,
@@ -12,26 +13,22 @@ const Enroll = sequelize.define(
 				model: 'User',
 				field: 'id',
 			},
+			allowNull: false,
 		},
 		course_id: {
 			type: Sequelize.INTEGER,
 			references: {
-				model: 'Course',
+				model: 'TblCourse',
 				field: 'id',
 			},
-		},
-		enroll_status: {
-			type: Sequelize.STRING,
 			allowNull: false,
-			defaultValue: 'pendiente',
 		},
 	},
 	{
 		timestamps: true,
 		createdAt: 'created_at',
 		updatedAt: 'updated_at',
-		tableName: 'users',
 	}
 )
 
-export default Enroll
+export default Enrollment

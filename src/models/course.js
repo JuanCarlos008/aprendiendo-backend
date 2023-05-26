@@ -1,34 +1,44 @@
+import { DataTypes } from 'sequelize'
+import sequelize from '../database/config.js'
+
 const Course = sequelize.define(
-	'Course',
+	'TblCourse',
 	{
 		id: {
-			type: Sequelize.INTEGER,
+			type: DataTypes.INTEGER,
 			primaryKey: true,
 			autoIncrement: true,
+			allowNull: false,
 		},
 		title: {
-			type: Sequelize.STRING,
+			type: DataTypes.STRING,
+			allowNull: false,
 		},
 		description: {
-			type: Sequelize.TEXT,
+			type: DataTypes.TEXT,
+			allowNull: false,
 		},
 		cost: {
-			type: Sequelize.DECIMAL(10, 2),
+			type: DataTypes.DECIMAL(10, 2),
 		},
 		duration: {
-			type: Sequelize.INTEGER,
+			type: DataTypes.INTEGER,
+			allowNull: false,
 		},
 		start_date: {
-			type: Sequelize.DATETIME,
+			type: DataTypes.DATETIME,
+			allowNull: false,
 		},
 		finish_date: {
-			type: Sequelize.DATETIME,
+			type: DataTypes.DATETIME,
+			allowNull: false,
 		},
 
 		category_id: {
-			type: Sequelize.INTEGER,
+			type: DataTypes.INTEGER,
+			allowNull: false,
 			references: {
-				model: 'CursoCategorias',
+				model: 'TblCourseCategory',
 				field: 'id',
 			},
 		},

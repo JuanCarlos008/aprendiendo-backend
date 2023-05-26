@@ -1,36 +1,41 @@
 const Module = sequelize.define(
-	'Modulo',
+	'TblModulo',
 	{
 		id: {
 			type: Sequelize.INTEGER,
 			primaryKey: true,
 			autoIncrement: true,
+			allowNull: false,
 		},
 		title: {
 			type: Sequelize.STRING,
+			allowNull: false,
 		},
 		description: {
 			type: Sequelize.TEXT,
-		},
-		duration: {
-			type: Sequelize.INTEGER,
+			allowNull: false,
 		},
 		order: {
 			type: Sequelize.INTEGER,
+			allowNull: false,
+		},
+		duration: {
+			type: Sequelize.INTEGER,
+			allowNull: false,
 		},
 		course_id: {
 			type: Sequelize.INTEGER,
 			references: {
-				model: 'Course',
+				model: 'TblCourse',
 				field: 'id',
 			},
+			allowNull: false,
 		},
 	},
 	{
 		timestamps: true,
 		createdAt: 'created_at',
 		updatedAt: 'updated_at',
-		tableName: 'users',
 	}
 )
 

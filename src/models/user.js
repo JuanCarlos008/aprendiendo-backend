@@ -3,7 +3,7 @@ import { DataTypes } from 'sequelize'
 import sequelize from '../database/config.js'
 
 const User = sequelize.define(
-	'users',
+	'TblUser',
 	{
 		id: {
 			type: DataTypes.INTEGER,
@@ -24,16 +24,19 @@ const User = sequelize.define(
 			type: DataTypes.STRING(100),
 			allowNull: false,
 		},
-		role: {
-			type: DataTypes.ENUM('admin', 'employer', 'professional'),
+		user_type_id: {
+			type: DataTypes.ENUM('admin', 'professional', 'institution'),
 			allowNull: false,
+			references: {
+				model: 'TblUserType',
+				field: 'id',
+			},
 		},
 	},
 	{
 		timestamps: true,
 		createdAt: 'created_at',
 		updatedAt: 'updated_at',
-		tableName: 'users',
 	}
 )
 

@@ -1,5 +1,5 @@
 const Option = sequelize.define(
-	'Option',
+	'TblOption',
 	{
 		id: {
 			type: Sequelize.INTEGER,
@@ -17,7 +17,7 @@ const Option = sequelize.define(
 		question_id: {
 			type: Sequelize.INTEGER,
 			references: {
-				model: 'Quetion',
+				model: 'TblQuetion',
 				field: 'id',
 			},
 		},
@@ -26,7 +26,6 @@ const Option = sequelize.define(
 		timestamps: true,
 		createdAt: 'created_at',
 		updatedAt: 'updated_at',
-		tableName: 'users',
 	}
 )
 
