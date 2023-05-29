@@ -1,3 +1,5 @@
+import Lesson from '../../../models/lesson'
+
 const getLessons = async (req, res) => {
 	try {
 		const lessons = await Lesson.findAll()

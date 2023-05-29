@@ -1,7 +1,10 @@
 // src/controllers/auth.js
 import bcrypt from 'bcrypt'
-import { createSessionToken, createAccessToken } from '../helpers/token.js'
-import User from '../models/user.js'
+import {
+	createSessionToken,
+	createAccessToken,
+} from '../../../helpers/token.js'
+import User from '../../../models/user.js'
 
 const login = async (req, res) => {
 	const { email, password } = req.body

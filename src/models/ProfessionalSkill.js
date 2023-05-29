@@ -32,3 +32,5 @@ const ProfessionalSkill = sequelize.define(
 		updatedAt: 'updated_at',
 	}
 )
+
+export default ProfessionalSkill

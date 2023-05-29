@@ -1,3 +1,5 @@
+import Comment from '../../../models/comment'
+
 const get = async (req, res) => {
 	try {
 		const comment = await Comment.findAll()

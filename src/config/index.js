@@ -15,7 +15,6 @@ const creatingDefaultUser = async () => {
 	const hashedPassword = await bcrypt.hash('admin', 10)
 
 	const user = new User({
-		name: 'admin',
 		email: 'admin@test.com',
 		password: hashedPassword,
 		role: 'admin',

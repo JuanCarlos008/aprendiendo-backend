@@ -1,3 +1,5 @@
+import CourseCategory from '../../../models/courseCategory'
+
 const getCourseCategories = async (req, res) => {
 	try {
 		const courseCategories = await CourseCategory.findAll()
@@ -30,7 +32,7 @@ const updateCourseCategory = async (req, res) => {
 
 const deleteCourseCategory = async (req, res) => {
 	try {
-		await CourseCategories.destroyById(req.params.id)
+		await CourseCategory.destroyById(req.params.id)
 		res.json({ message: 'Curso categoria eliminada' })
 	} catch (error) {
 		res.status(500).send(error)

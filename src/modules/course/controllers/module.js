@@ -1,3 +1,5 @@
+import Module from '../../../models/module'
+
 const getModules = async (req, res) => {
 	try {
 		const modules = await Module.findAll()

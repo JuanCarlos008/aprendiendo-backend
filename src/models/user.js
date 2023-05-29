@@ -11,10 +11,6 @@ const User = sequelize.define(
 			allowNull: false,
 			primaryKey: true,
 		},
-		name: {
-			type: DataTypes.STRING(50),
-			allowNull: false,
-		},
 		email: {
 			type: DataTypes.STRING(100),
 			allowNull: false,
@@ -37,6 +33,7 @@ const User = sequelize.define(
 		timestamps: true,
 		createdAt: 'created_at',
 		updatedAt: 'updated_at',
+		tableName: 'TblUser',
 	}
 )
 

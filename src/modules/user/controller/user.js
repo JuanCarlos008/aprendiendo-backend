@@ -1,6 +1,33 @@
 // src/controllers/user.js
 import bcrypt from 'bcrypt'
-import User from '../models/user.js'
+import User from '../../../models/user.js'
+
+const getUsers = async (req, res) => {
+	try {
+		const users = await User.findAll()
+		console.log({ users })
+		return res.status(200).json({ users })
+	} catch (err) {
+		console.log(err)
+		return res.status(500).json({ message: 'Error al obtener usuarios' })
+	}
+}
+
+const getUserById = async (req, res) => {
+	const userId = req.params.id
+	try {
+		const user = await User.findOne({ where: { id: userId } })
+
+		if (!user) {
+			return res.status(404).json({ message: 'Usuario no encontrado' })
+		}
+
+		return res.status(200).json({ user })
+	} catch (err) {
+		console.log(err)
+		return res.status(500).json({ message: 'Error al obtener usuario' })
+	}
+}
 
 const createUser = async (req, res) => {
 	const { name, email, password, role } = req.body
@@ -70,15 +97,4 @@ const deleteUser = async (req, res) => {
 	}
 }
 
-const getUsers = async (req, res) => {
-	try {
-		const users = await User.findAll()
-
-		return res.status(200).json({ users })
-	} catch (err) {
-		console.log(err)
-		return res.status(500).json({ message: 'Error al obtener usuarios' })
-	}
-}
-
-export default { createUser, updateUser, deleteUser, getUsers }
+export default { getUsers, getUserById, createUser, updateUser, deleteUser }

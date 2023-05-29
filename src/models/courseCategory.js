@@ -8,7 +8,7 @@ const CourseCategory = sequelize.define(
 			primaryKey: true,
 			autoIncrement: true,
 		},
-		name: {
+		title: {
 			type: DataTypes.STRING(50),
 		},
 	},
@@ -22,13 +22,13 @@ const CourseCategory = sequelize.define(
 export const CourseCategorySeeder = () => {
 	CourseCategory.bulkCreate([
 		{
-			name: 'Programación',
+			title: 'Programación',
 		},
 		{
-			name: 'Ciberseguridad',
+			title: 'Ciberseguridad',
 		},
 		{
-			name: 'Diseño',
+			title: 'Diseño',
 		},
 	])
 }

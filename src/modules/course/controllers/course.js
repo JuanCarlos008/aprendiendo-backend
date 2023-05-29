@@ -1,3 +1,5 @@
+import Course from '../../../models/course'
+
 const get = async (req, res) => {
 	try {
 		const courses = await Course.findAll()
@@ -49,3 +51,5 @@ const deleteC = async (req, res) => {
 		res.status(500).send(error)
 	}
 }
+
+export { get, getByID, create, update, deleteC }

@@ -4,8 +4,8 @@ import cors from 'cors'
 import helmet from 'helmet'
 import morgan from 'morgan'
 import dotenv from 'dotenv'
-import authRoutes from './routes/auth.js'
-import userRoutes from './routes/user.js'
+import authRoutes from './modules/user/routes/auth.js'
+import userRoutes from './modules/user/routes/user.js'
 
 dotenv.config()
 
@@ -15,9 +15,9 @@ const app = express()
 app.use(express.json())
 
 // Politica de cors
-const allowedOrigins = ['http://localhost:3000']
+const allowedOrigins = ['*']
 
-app.use(
+/* app.use(
 	cors({
 		origin: function (origin, callback) {
 			if (!origin) return callback(null, true)
@@ -30,7 +30,7 @@ app.use(
 			return callback(null, true)
 		},
 	})
-)
+) */
 
 //
 app.use(helmet())
