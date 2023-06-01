@@ -2,54 +2,114 @@ import Comment from '../../../models/comment'
 
 const get = async (req, res) => {
 	try {
-		const comment = await Comment.findAll()
-		res.json(comment)
+		const comments = await Comment.findAll()
+
+		if (comments.length === 0) {
+			return res
+				.status(404)
+				.json({ data: [], message: 'No existen comentarios' })
+		}
+
+		return res
+			.status(200)
+			.json({ data: comments, message: 'Comentarios obtenidos' })
 	} catch (error) {
-		res.status(500).send(error)
+		return res
+			.status(500)
+			.json({ data: {}, message: 'Error al obtener los comentarios' })
 	}
 }
 
-const getByID = async (req, res) => {
+const getById = async (req, res) => {
+	const id = req.params.id
+
 	try {
-		const comment = await Comment.findOne({
-			where: { id: req.params.id },
-		})
-		res.json(comment)
+		const comment = await Comment.findByPk(id)
+
+		if (!comment) {
+			return res
+				.status(404)
+				.json({ data: {}, message: 'No existe el comentario' })
+		}
+
+		return res
+			.status(200)
+			.json({ data: comment, message: 'Comentario obtenido' })
 	} catch (error) {
-		res.status(500).send(error)
+		return res
+			.status(500)
+			.json({ data: {}, message: 'Error al obtener el comentario' })
 	}
 }
 
 const create = async (req, res) => {
-	const comment = new Comment(req.body)
+	const { comment_content, user_id, course_id } = req.body
+
 	try {
-		await comment.save()
-		res.json(comment)
+		const comment = await Comment.create({
+			comment_content,
+			user_id,
+			course_id,
+		})
+		return res.status(201).json({ data: comment, message: 'Comentario creado' })
 	} catch (error) {
-		res.status(500).send(error)
+		return res
+			.status(500)
+			.json({ data: {}, message: 'Error al crear el comentario' })
 	}
 }
 
-const update = async (req, res) => {
-	const comment = await Comment.findOne({
-		where: { id: req.params.id },
-	})
+const edit = async (req, res) => {
+	const commentId = req.params.id
+	const { comment_content, user_id, course_id } = req.body
+
 	try {
-		comment.fill(req.body)
-		await comment.save()
-		res.json(comment)
+		const comment = await Comment.findByPk(commentId)
+
+		if (!comment) {
+			return res
+				.status(400)
+				.json({ data: {}, message: 'No existe el comentario' })
+		}
+
+		await comment.update({
+			comment_content,
+			user_id,
+			course_id,
+		})
+
+		return res
+			.status(200)
+			.json({ data: comment, message: 'Comentario editado' })
 	} catch (error) {
-		res.status(500).send(error)
+		return res
+			.status(500)
+			.json({ data: {}, message: 'Error al editar el comentario' })
 	}
 }
 
-const deleteC = async (req, res) => {
+const remove = async (req, res) => {
+	const commentId = req.params.id
+
 	try {
-		await Comment.destroyById(req.params.id)
-		res.json({ message: 'Comentario eliminado' })
+		const comment = await Comment.findByPk(commentId)
+
+		if (!comment) {
+			return res
+				.status(400)
+				.json({ data: {}, message: 'No existe el comentario' })
+		}
+
+		await comment.destroy()
+
+		return res
+			.status(200)
+			.json({ data: commentId, message: 'Comentario eliminado' })
 	} catch (error) {
-		res.status(500).send(error)
+		return res
+			.status(500)
+			.json({ data: {}, message: 'Error al eliminar el comentario' })
 	}
 }
 
-export { get, getByID, create, update, deleteC }
+export { get, getById, create, edit, remove }

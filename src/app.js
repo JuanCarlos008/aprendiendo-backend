@@ -4,8 +4,7 @@ import cors from 'cors'
 import helmet from 'helmet'
 import morgan from 'morgan'
 import dotenv from 'dotenv'
-import authRoutes from './modules/user/routes/auth.js'
-import userRoutes from './modules/user/routes/user.js'
+import allRoutes from './routes.js'
 
 dotenv.config()
 
@@ -37,8 +36,7 @@ app.use(helmet())
 app.use(morgan('dev'))
 
 // Routes
-app.use('/auth', authRoutes)
-app.use('/users', userRoutes)
+app.use('/api', allRoutes)
 
 // Error handling
 app.use((err, req, res, next) => {

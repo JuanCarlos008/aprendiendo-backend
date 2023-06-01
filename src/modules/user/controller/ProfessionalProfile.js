@@ -1,47 +1,133 @@
 import ProfessionalProfile from '../../../models/ProfessionalProfile'
 
-const getProfessionalProfile = async (req, res) => {
+const get = async (req, res) => {
 	try {
 		const professionalProfile = await ProfessionalProfile.findAll()
-		res.json(professionalProfile)
+
+		if (professionalProfile.length === 0) {
+			return res
+				.status(404)
+				.json({ data: [], message: 'No existen perfiles profesionales' })
+		}
+
+		return res.status(200).json({ data: professionalProfile })
 	} catch (error) {
-		res.status(500).send(error)
+		return res.status(500).json({
+			data: [],
+			message: 'Error al obtener los perfiles profesionales',
+		})
 	}
 }
 
-const createProfessionalProfile = async (req, res) => {
-	const professionalProfile = new ProfessionalProfile(req.body)
+const getById = async (req, res) => {
+	const id = req.params.id
+
 	try {
-		await professionalProfile.save()
-		res.json(professionalProfile)
+		const profile = await ProfessionalProfile.findByPk(id)
+
+		if (!profile) {
+			return res
+				.status(404)
+				.json({ data: {}, message: 'No existe el perfil de la institución' })
+		}
+
+		return res.status(200).json({ data: profile })
 	} catch (error) {
-		res.status(500).send(error)
+		return res.status(500).json({
+			data: {},
+			message: 'Error al obtener el perfil de la institución',
+		})
 	}
 }
 
-const updateProfessionalProfile = async (req, res) => {
-	const professionalProfile = await ProfessionalProfile.findById(req.params.id)
+const create = async (req, res) => {
+	const {
+		name,
+		last_name,
+		about,
+		cv_url,
+		porfolio_url,
+		image_url,
+		gender,
+		user_id,
+	} = req.body
+
 	try {
-		professionalProfile.fill(req.body)
-		await professionalProfile.save()
-		res.json(professionalProfile)
+		const profile = await ProfessionalProfile.create({
+			name,
+			last_name,
+			about,
+			cv_url,
+			porfolio_url,
+			image_url,
+			gender,
+			user_id,
+		})
+		return res.status(201).json({ data: profile, message: 'Perfil creado' })
 	} catch (error) {
-		res.status(500).send(error)
+		return res
+			.status(500)
+			.json({ data: {}, message: 'Error al crear el perfil profesional' })
 	}
 }
 
-const deleteProfessionalProfile = async (req, res) => {
+const edit = async (req, res) => {
+	const { name, last_name, about, cv_url, porfolio_url, image_url, gender } =
+		req.body
+
+	const id = req.params.id
+
 	try {
-		await ProfessionalProfile.destroyById(req.params.id)
-		res.json({ message: 'Perfil profesional eliminado' })
+		const profile = await ProfessionalProfile.findByPk(id)
+
+		if (!profile) {
+			return res
+				.status(404)
+				.json({ data: {}, message: 'No existe el perfil profesional' })
+		}
+
+		await profile.update({
+			name: name || profile.name,
+			last_name: last_name || profile.last_name,
+			about: about || profile.about,
+			cv_url: cv_url || profile.cv_url,
+			porfolio_url: porfolio_url || profile.porfolio_url,
+			image_url: image_url || profile.image_url,
+			gender: gender || profile.gender,
+		})
+
+		return res
+			.status(200)
+			.json({ data: profile, message: 'Perfil profesional actualizado' })
 	} catch (error) {
-		res.status(500).send(error)
+		return res
+			.status(500)
+			.json({ data: {}, message: 'Error al actualizar el perfil profesional' })
 	}
 }
 
-export {
-	getProfessionalProfile,
-	createProfessionalProfile,
-	updateProfessionalProfile,
-	deleteProfessionalProfile,
+const remove = async (req, res) => {
+	const id = req.params.id
+
+	try {
+		const profile = await ProfessionalProfile.findByPk(id)
+
+		if (!profile) {
+			return res
+				.status(404)
+				.json({ data: {}, message: 'No existe el perfil profesional' })
+		}
+
+		await profile.destroy()
+
+		return res
+			.status(200)
+			.json({ data: id, message: 'Perfil profesional eliminado' })
+	} catch (error) {
+		return res
+			.status(500)
+			.json({ data: {}, message: 'Error al eliminar el perfil profesional' })
+	}
 }
+
+export { get, getById, create, edit, remove }

@@ -7,7 +7,7 @@ const Module = sequelize.define(
 			autoIncrement: true,
 			allowNull: false,
 		},
-		title: {
+		name: {
 			type: Sequelize.STRING,
 			allowNull: false,
 		},
@@ -15,7 +15,7 @@ const Module = sequelize.define(
 			type: Sequelize.TEXT,
 			allowNull: false,
 		},
-		order: {
+		position: {
 			type: Sequelize.INTEGER,
 			allowNull: false,
 		},

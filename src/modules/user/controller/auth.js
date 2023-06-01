@@ -32,6 +32,27 @@ const login = async (req, res) => {
 	}
 }
 
+const validatePassword = async (req, res) => {
+	const userId = req.params.id
+	const { password } = req.body
+
+	try {
+		const user = await User.findByPk(userId)
+
+		if (!user) {
+			return res.status(404).json({ message: 'Usuario no encontrado' })
+		}
+
+		const isValidPassword = await bcrypt.compare(password, user.password)
+
+		return res.status(200).json({ match: isValidPassword })
+	} catch (error) {
+		console.error(error)
+		return res.status(500).json({ message: 'Error al validar contraseña' })
+	}
+}
+
 export default {
 	login,
+	validatePassword,
 }

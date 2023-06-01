@@ -1,7 +1,8 @@
+import { DataTypes } from 'sequelize'
 import sequelize from '../database/config.js'
 
 const UserType = sequelize.define(
-	'TblUserType',
+	'TblUser_Type',
 	{
 		id: {
 			type: DataTypes.INTEGER,
@@ -9,8 +10,8 @@ const UserType = sequelize.define(
 			autoIncrement: true,
 			allowNull: false,
 		},
-		type: {
-			type: DataTypes.STRING(50),
+		name: {
+			type: DataTypes.ENUM('admin', 'professional', 'institution'),
 			allowNull: false,
 		},
 	},
@@ -18,21 +19,8 @@ const UserType = sequelize.define(
 		timestamps: true,
 		createdAt: 'created_at',
 		updatedAt: 'updated_at',
+		tableName: 'tbluser_type',
 	}
 )
-
-export const UserTypeSeeder = () => {
-	UserType.bulkCreate([
-		{
-			type: 'admin',
-		},
-		{
-			type: 'professional',
-		},
-		{
-			type: 'institution',
-		},
-	])
-}
 
 export default UserType

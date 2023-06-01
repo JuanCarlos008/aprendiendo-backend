@@ -1,17 +1,18 @@
 import express from 'express'
+import courseController from '../controllers/course.js'
 
 // Create a router
 const router = express.Router()
 
 // Register the routes with the router
-router.get('/', getModules)
+router.get('/', courseController.get)
 
-router.get('/:id', getModules)
+router.get('/:id', courseController.getById)
 
-router.post('/', createModule)
+router.post('/', courseController.create)
 
-router.put('/:id', updateModule)
+router.put('/:id', courseController.edit)
 
-router.delete('/:id', deleteModule)
+router.delete('/:id', courseController.remove)
 
 export default router

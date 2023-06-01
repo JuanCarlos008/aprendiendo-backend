@@ -6,10 +6,13 @@ CREATE TABLE TblCourse_Category (
 
 CREATE TABLE TblCourse (
   id int NOT NULL AUTO_INCREMENT,
-  title varchar(200) NOT NULL,
+  name varchar(200) NOT NULL,
   description varchar(500) NOT NULL,
-  cost int NOT NULL,
-  duration int NOT NULL,
+  cost int,
+  duration int,
+  image_url varchar(300) NOT NULL,
+  start_date date,
+  end_date date,
   created_at timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   updated_at timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   category_id int NOT NULL,
@@ -19,7 +22,7 @@ CREATE TABLE TblCourse (
 
 CREATE TABLE TblModule (
   id int NOT NULL AUTO_INCREMENT,
-  title varchar(200) NOT NULL,
+  name varchar(200) NOT NULL,
   description varchar(500) NOT NULL,
   position int NOT NULL,
   duration int NOT NULL,
@@ -64,8 +67,9 @@ CREATE TABLE TblCourse_Enrollment (
 
 CREATE TABLE TblUser_Type (
   id int NOT NULL AUTO_INCREMENT,
-  title varchar(30) NOT NULL,
+  name varchar(30) NOT NULL,
   created_at timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (id)
 );
 

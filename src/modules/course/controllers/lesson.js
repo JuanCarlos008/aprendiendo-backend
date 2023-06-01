@@ -1,42 +1,95 @@
 import Lesson from '../../../models/lesson'
 
-const getLessons = async (req, res) => {
+const get = async (req, res) => {
 	try {
-		const lessons = await Lesson.findAll()
-		res.json(lessons)
+		const lesson = await Lesson.findAll()
+
+		if (!lesson) {
+			return res
+				.status(404)
+				.json({ data: [], message: 'No se encontraron las lecciones' })
+		}
+		return res.status(200).json({ data: lesson })
 	} catch (error) {
-		res.status(500).send(error)
+		res
+			.status(500)
+			.json({ data: [], message: 'Error al obtener las lecciones' })
 	}
 }
 
-const createLesson = async (req, res) => {
-	const lesson = new Lesson(req.body)
+const getById = async (req, res) => {
+	const id = req.params.id
 	try {
-		await lesson.save()
-		res.json(lesson)
+		const lesson = await Lesson.findByPk(id)
+		if (!lesson) {
+			return res
+				.status(404)
+				.json({ data: {}, message: 'No se encontró la leccion' })
+		}
+
+		return res.status(200).json({ data: lesson })
 	} catch (error) {
-		res.status(500).send(error)
+		res.status(500).json({ data: {}, message: 'Error al obtener la leccion' })
 	}
 }
 
-const updateLesson = async (req, res) => {
-	const lesson = await Lesson.findById(req.params.id)
+const create = async (req, res) => {
+	const { name, description, course_id } = req.body
+
 	try {
-		lesson.fill(req.body)
-		await lesson.save()
-		res.json(lesson)
+		const lesson = await Lesson.create({ name, description, course_id })
+		return res.status(201).json({ data: lesson, message: 'Leccion creada' })
 	} catch (error) {
-		res.status(500).send(error)
+		console.error(error)
+		return res
+			.status(500)
+			.json({ data: {}, message: 'Error al crear la leccion' })
 	}
 }
 
-const deleteLesson = async (req, res) => {
+const edit = async (req, res) => {
+	const id = req.params.id
+	const { name, description, course_id } = req.body
 	try {
-		await Lesson.destroyById(req.params.id)
-		res.json({ message: 'Leccion de empleo eliminada' })
+		const lesson = await Lesson.findByPk(id)
+
+		if (!lesson) {
+			return res
+				.status(400)
+				.json({ data: {}, message: 'No se encontró la leccion' })
+		}
+
+		await lesson.update({ name, description, course_id })
+
+		return res
+			.status(200)
+			.json({ data: lesson, message: 'Leccion actualizada' })
 	} catch (error) {
-		res.status(500).send(error)
+		return res
+			.status(500)
+			.json({ data: {}, message: 'Error al actualizar la leccion' })
 	}
 }
 
-export { getLessons, createLesson, updateLesson, deleteLesson }
+const remove = async (req, res) => {
+	const id = req.params.id
+	try {
+		const lesson = await Lesson.findByPk(id)
+
+		if (!lesson) {
+			return res
+				.status(404)
+				.json({ data: {}, message: 'No se encontró la leccion' })
+		}
+
+		await lesson.destroy()
+
+		return res.status(200).json({ data: id, message: 'Leccion eliminada' })
+	} catch (error) {
+		return res
+			.status(500)
+			.json({ data: {}, message: 'Error al eliminar la leccion' })
+	}
+}
+
+export { get, getById, create, edit, remove }

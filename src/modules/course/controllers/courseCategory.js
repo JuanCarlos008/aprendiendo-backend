@@ -1,47 +1,100 @@
 import CourseCategory from '../../../models/courseCategory'
 
-const getCourseCategories = async (req, res) => {
+const get = async (req, res) => {
 	try {
-		const courseCategories = await CourseCategory.findAll()
-		res.json(courseCategories)
+		const courseCategory = await CourseCategory.findAll()
+
+		if (!courseCategory) {
+			return res
+				.status(404)
+				.json({ data: [], message: 'No se encontraron las categorias' })
+		}
+		return res.status(200).json({ data: courseCategory })
 	} catch (error) {
-		res.status(500).send(error)
+		res
+			.status(500)
+			.json({ data: [], message: 'Error al obtener las categorias' })
 	}
 }
 
-const createCourseCategory = async (req, res) => {
-	const courseCategory = new CourseCategory(req.body)
+const getById = async (req, res) => {
+	const id = req.params.id
 	try {
-		await courseCategory.save()
-		res.json(courseCategory)
+		const courseCategory = await CourseCategory.findByPk(id)
+		if (!courseCategory) {
+			return res
+				.status(404)
+				.json({ data: {}, message: 'No se encontró la categoria' })
+		}
+
+		return res.status(200).json({ data: courseCategory })
 	} catch (error) {
-		res.status(500).send(error)
+		res.status(500).json({ data: {}, message: 'Error al obtener la categoria' })
 	}
 }
 
-const updateCourseCategory = async (req, res) => {
-	const courseCategory = await CourseCategory.findById(req.params.id)
+const create = async (req, res) => {
+	const { name } = req.body
+
 	try {
-		courseCategory.fill(req.body)
-		await courseCategory.save()
-		res.json(courseCategory)
+		const courseCategory = await CourseCategory.create({ name })
+		return res
+			.status(201)
+			.json({ data: courseCategory, message: 'Categoria creada' })
 	} catch (error) {
-		res.status(500).send(error)
+		console.error(error)
+		return res
+			.status(500)
+			.json({ data: {}, message: 'Error al crear la categoria' })
 	}
 }
 
-const deleteCourseCategory = async (req, res) => {
+const edit = async (req, res) => {
+	const id = req.params.id
+	const { name } = req.body
 	try {
-		await CourseCategory.destroyById(req.params.id)
-		res.json({ message: 'Curso categoria eliminada' })
+		const courseCategory = await CourseCategory.findByPk(id)
+
+		if (!courseCategory) {
+			return res
+				.status(400)
+				.json({ data: {}, message: 'No existe la categoria' })
+		}
+
+		await courseCategory.update({
+			name,
+		})
+		return res
+			.status(200)
+			.json({ data: courseCategory, message: 'Categoria editada' })
 	} catch (error) {
-		res.status(500).send(error)
+		return res
+			.status(500)
+			.json({ data: {}, message: 'Error al editar la categoria' })
 	}
 }
 
-export {
-	getCourseCategories,
-	createCourseCategory,
-	updateCourseCategory,
-	deleteCourseCategory,
+const remove = async (req, res) => {
+	const id = req.params.id
+
+	try {
+		const courseCategory = await CourseCategory.findByPk(id)
+
+		if (!courseCategory) {
+			return res
+				.status(400)
+				.json({ data: {}, message: 'No existe la categoria' })
+		}
+
+		await courseCategory.destroy()
+		return res
+			.status(200)
+			.json({ data: courseCategory, message: 'Categoria eliminada' })
+	} catch (error) {
+		return res
+			.status(500)
+			.json({ data: {}, message: 'Error al eliminar la categoria' })
+	}
 }
+
+export { get, getById, create, edit, remove }

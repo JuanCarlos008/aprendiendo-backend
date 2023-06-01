@@ -2,62 +2,83 @@
 import bcrypt from 'bcrypt'
 import User from '../../../models/user.js'
 
-const getUsers = async (req, res) => {
+//listo
+const get = async (req, res) => {
 	try {
 		const users = await User.findAll()
-		console.log({ users })
-		return res.status(200).json({ users })
-	} catch (err) {
-		console.log(err)
-		return res.status(500).json({ message: 'Error al obtener usuarios' })
-	}
-}
 
-const getUserById = async (req, res) => {
-	const userId = req.params.id
-	try {
-		const user = await User.findOne({ where: { id: userId } })
-
-		if (!user) {
-			return res.status(404).json({ message: 'Usuario no encontrado' })
+		if (users.length === 0) {
+			return res
+				.status(404)
+				.json({ data: [], message: 'No se encontraron usuarios' })
 		}
 
-		return res.status(200).json({ user })
+		return res.status(200).json({ data: users })
 	} catch (err) {
-		console.log(err)
-		return res.status(500).json({ message: 'Error al obtener usuario' })
+		return res
+			.status(500)
+			.json({ data: [], message: 'Error al obtener usuarios' })
 	}
 }
 
-const createUser = async (req, res) => {
-	const { name, email, password, role } = req.body
+//listo
+const getById = async (req, res) => {
+	const id = req.params.id
+	try {
+		const user = await User.findByPk(id)
+
+		if (!user) {
+			return res
+				.status(404)
+				.json({ data: {}, message: 'Usuario no encontrado' })
+		}
+
+		return res.status(200).json({ data: user })
+	} catch (err) {
+		console.log(err)
+		return res
+			.status(500)
+			.json({ data: {}, message: 'Error al obtener usuario' })
+	}
+}
+
+const create = async (req, res) => {
+	const { email, password, role } = req.body
 
 	try {
+		const existingUser = await User.findOne({ where: { email } })
+
+		if (existingUser) {
+			return res
+				.status(409)
+				.json({ data: {}, message: 'El correo electrónico ya está en uso' })
+		}
+
 		const hashedPassword = await bcrypt.hash(password, 10)
 
 		const user = await User.create({
-			name,
 			email,
 			password: hashedPassword,
 			role,
 		})
 
-		return res.status(201).json({ user })
+		return res.status(201).json({ data: user })
 	} catch (err) {
-		console.log(err)
-		return res.status(500).json({ message: 'Error al crear usuario' })
+		return res.status(500).json({ data: {}, message: 'Error al crear usuario' })
 	}
 }
 
-const updateUser = async (req, res) => {
-	const userId = req.params.id
-	const { name, email, password, role } = req.body
+const edit = async (req, res) => {
+	const id = req.params.id
+	const { email, password, role } = req.body
 
 	try {
-		const user = await User.findOne({ where: { id: userId } })
+		const user = await User.findByPk(id)
 
 		if (!user) {
-			return res.status(404).json({ message: 'Usuario no encontrado' })
+			return res
+				.status(404)
+				.json({ data: {}, message: 'Usuario no encontrado' })
 		}
 
 		const hashedPassword = password
@@ -65,36 +86,41 @@ const updateUser = async (req, res) => {
 			: user.password
 
 		await user.update({
-			name: name || user.name,
 			email: email || user.email,
 			password: hashedPassword,
 			role: role || user.role,
 		})
 
-		return res.status(200).json({ user })
+		return res.status(200).json({ data: user, message: 'Usuario actualizado' })
 	} catch (err) {
 		console.log(err)
-		return res.status(500).json({ message: 'Error al actualizar usuario' })
+		return res
+			.status(500)
+			.json({ data: {}, message: 'Error al actualizar usuario' })
 	}
 }
 
-const deleteUser = async (req, res) => {
-	const userId = req.params.id
+const remove = async (req, res) => {
+	const id = req.params.id
 
 	try {
-		const user = await User.findOne({ where: { id: userId } })
+		const user = await User.findByPk(id)
 
 		if (!user) {
-			return res.status(404).json({ message: 'Usuario no encontrado' })
+			return res
+				.status(404)
+				.json({ data: {}, message: 'Usuario no encontrado' })
 		}
 
 		await user.destroy()
 
-		return res.status(204).json()
+		return res.status(204).json({ data: user })
 	} catch (err) {
-		console.log(err)
-		return res.status(500).json({ message: 'Error al eliminar usuario' })
+		console.error(err)
+		return res
+			.status(500)
+			.json({ data: {}, message: 'Error al eliminar usuario' })
 	}
 }
 
-export default { getUsers, getUserById, createUser, updateUser, deleteUser }
+export default { get, getById, create, edit, remove }

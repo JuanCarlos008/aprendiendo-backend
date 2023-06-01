@@ -10,7 +10,7 @@ const Course = sequelize.define(
 			autoIncrement: true,
 			allowNull: false,
 		},
-		title: {
+		name: {
 			type: DataTypes.STRING,
 			allowNull: false,
 		},
@@ -25,12 +25,15 @@ const Course = sequelize.define(
 			type: DataTypes.INTEGER,
 			allowNull: false,
 		},
+		image_url: {
+			type: DataTypes.STRING,
+		},
 		start_date: {
-			type: DataTypes.DATETIME,
+			type: DataTypes.DATE,
 			allowNull: false,
 		},
-		finish_date: {
-			type: DataTypes.DATETIME,
+		end_date: {
+			type: DataTypes.DATE,
 			allowNull: false,
 		},
 
@@ -47,6 +50,7 @@ const Course = sequelize.define(
 		timestamps: true,
 		createdAt: 'created_at',
 		updatedAt: 'updated_at',
+		tableName: 'tblcourse',
 	}
 )
 
